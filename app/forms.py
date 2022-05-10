@@ -1,25 +1,29 @@
 from flask_wtf import FlaskForm
 from wtforms.validators import EqualTo, InputRequired, Optional
 from wtforms import (
-    StringField, DateTimeLocalField, TextAreaField
+    StringField, DateTimeLocalField, TextAreaField, PasswordField
 )
 
 
 class RegisterForm(FlaskForm):
     name = StringField('Username: ', [InputRequired()])
-    password = StringField('Password: ', [
+    password = PasswordField('Password: ', [
             InputRequired(),
             EqualTo('confirm', message='Passwords must match.')
         ])
-    confirm = StringField('Confirm password: ', [InputRequired()])
+    confirm = PasswordField('Confirm password: ', [InputRequired()])
 
 
 class LoginForm(FlaskForm):
     name = StringField('Username: ', [InputRequired()])
-    password = StringField('Password: ', [InputRequired()])
+    password = PasswordField('Password: ', [InputRequired()])
 
 
 class TaskForm(FlaskForm):
     title = StringField('Title: ', [InputRequired()])
     about = TextAreaField('Description: ', [Optional()])
-    date = DateTimeLocalField('Ends on: ', [Optional()])
+    date = DateTimeLocalField(
+            label='Ends on: ',
+            validators=[InputRequired()],
+            format='%Y-%m-%dT%H:%M'
+        )

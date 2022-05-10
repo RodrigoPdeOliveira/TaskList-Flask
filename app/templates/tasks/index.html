@@ -5,16 +5,35 @@
 
 
 {% block content %}
-    <h1>Main Page</h1>
-    {% for task in tasks %}
-    {% endfor %}
-    <fieldset>
-        <form method="POST" action="">
-            {{ form.csrf_token }}
-            {{ form.title.label }} {{ form.title }}
-            {{ form.about.label }} {{ form.about }}
-            {{ form.date.label }}  {{ form.date }}
-            <input type="submit" value="Submit">
-        </form>
-    </fieldset>
+    {% if g.user %}
+        <h1>Main Page</h1>
+        <ul>
+            <li><span>{{ g.user['username'] }}</span></li>
+            <li><a href="{{ url_for('auth.logout') }}">Logout</a></li>
+        </ul>
+        
+        <fieldset>
+            <form method="POST" action="">
+                {{ form.csrf_token }}
+                {{ form.title.label }} {{ form.title }}
+                {{ form.about.label }} {{ form.about }}
+                {{ form.date.label }}  {{ form.date }}
+                <input type="submit" value="Submit">
+            </form>
+        </fieldset>
+        
+        {% for task in tasks %}
+            <fieldset>
+                <h2>{{ task.title }}</h2>
+                <span>{{ task.about }}</span>
+                <span>{{ task.created }}</span>
+                <span>{{ task.ends_on }}</span>
+            </fieldset>
+        {% endfor %}
+        
+    {% else %}
+        <li><a href="{{ url_for('auth.register') }}">Register</a>
+        <li><a href="{{ url_for('auth.login') }}">Log In</a>
+    {% endif %}
+
 {% endblock %}
