@@ -73,3 +73,12 @@ def get_user_tasks():
     ).fetchall()
 
     return tasks
+
+
+def delete_task(task_id):
+    db = get_db()
+    db.execute(
+        f"""DELETE FROM tasks
+            WHERE id={task_id} AND author_id={g.user['id']}"""
+    )
+    db.commit()

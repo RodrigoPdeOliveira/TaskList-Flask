@@ -28,6 +28,8 @@
                 <span>{{ task.about }}</span>
                 <span>{{ task.created }}</span>
                 <span>{{ task.ends_on }}</span>
+                <a href="">Edit</a>
+                <a href="{{ url_for('tasks.del_task', task_id=task.id) }}">Delete</a>
             </fieldset>
         {% endfor %}
         
