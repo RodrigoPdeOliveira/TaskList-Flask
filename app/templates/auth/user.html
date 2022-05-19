@@ -1,0 +1,35 @@
+{% extends 'base.html' %}
+
+{% block title %}My Settings{% endblock %}
+
+{% block content %}
+    <h1>{{ g.user['username'] }}</h1>
+    <ul>
+        <li><a href="{{ url_for('tasks.index') }}">Main Page</a></li>
+        <li><a href="{{ url_for('auth.logout') }}">Logout</a></li>
+    </ul>
+    <div>
+        <button data-bs-toggle="collapse" data-bs-target="#changeusername">Change Username</button>
+        <div id="changeusername" class="collapse">
+            <h4>Change Username</h4>
+        </div>
+    </div>
+    <div>
+        <button data-bs-toggle="collapse" data-bs-target="#changepassword">Change Password</button>
+        <div id="changepassword" class="collapse">
+            <h4>Change Password</h4>
+        </div>
+    </div>
+    <div>
+        <button data-bs-toggle="collapse" data-bs-target="#deletetasks">Delete All Tasks</button>
+        <div id="deletetasks" class="collapse">
+            <a href="{{ url_for('auth.del_tasks') }}">Delete All Tasks</a>
+        </div>
+    </div>
+    <div>
+        <button data-bs-toggle="collapse" data-bs-target="#deleteaccount">Delete Account</button>
+        <div id="deleteaccount" class="collapse">
+            <h4>Delete Account</h4>
+        </div>
+    </div>
+{% endblock %}

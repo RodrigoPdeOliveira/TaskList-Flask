@@ -1,10 +1,12 @@
 from .forms import RegisterForm, LoginForm
-from .functions import create_user, log_in, log_out
+from .functions import (
+    create_user, delete_all_tasks, log_in, log_out
+    )
 from .db import get_db
 from flask import Blueprint, render_template, redirect, url_for, g, session
 
 
-bp = Blueprint('auth', __name__, url_prefix='/auth')
+bp = Blueprint('auth', __name__)
 
 
 @bp.route('/register', methods=('POST', 'GET'))
@@ -27,10 +29,27 @@ def login():
     return render_template('auth/login.html', form=form)
 
 
+@bp.route('/user', methods=('POST', 'GET'))
+def user():
+    if g.user is not None:
+        return render_template('auth/user.html')
+    else:
+        return redirect(url_for('auth.login'))
+
+
 @bp.route('/logout')
 def logout():
     log_out()
     return redirect(url_for('auth.login'))
+
+
+@bp.route('/delete_tasks')
+def del_tasks():
+    if g.user is not None:
+        delete_all_tasks()
+        return redirect(url_for('auth.user'))
+    else:
+        return redirect(url_for('auth.login'))
 
 
 @bp.before_app_request

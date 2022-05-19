@@ -16,6 +16,7 @@ def index():
             return redirect(url_for('tasks.index'))
     except BaseException:
         return redirect(url_for('auth.login'))
+
     return render_template('tasks/index.html', form=form, tasks=tasks)
 
 

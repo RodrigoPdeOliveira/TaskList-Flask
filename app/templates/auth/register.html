@@ -6,6 +6,9 @@
 
 {% block content %}
     <h1>Register Page</h1>
+    <ul>
+        <li><a href="{{ url_for('auth.login') }}">Log In</a>
+    </ul>
     <form method="POST" action="">
         {{ form.csrf_token }}
         {{ form.name.label }} {{ form.name }}
