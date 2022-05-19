@@ -29,7 +29,7 @@
     <div>
         <button data-bs-toggle="collapse" data-bs-target="#deleteaccount">Delete Account</button>
         <div id="deleteaccount" class="collapse">
-            <h4>Delete Account</h4>
+            <a href="{{ url_for('auth.del_account') }}">Delete Account</a>
         </div>
     </div>
 {% endblock %}

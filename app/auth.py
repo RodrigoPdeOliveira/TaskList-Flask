@@ -1,6 +1,6 @@
 from .forms import RegisterForm, LoginForm
 from .functions import (
-    create_user, delete_all_tasks, log_in, log_out
+    create_user, delete_account, delete_all_tasks, log_in, log_out
     )
 from .db import get_db
 from flask import Blueprint, render_template, redirect, url_for, g, session
@@ -50,6 +50,14 @@ def del_tasks():
         return redirect(url_for('auth.user'))
     else:
         return redirect(url_for('auth.login'))
+
+
+@bp.route('/delete_account')
+def del_account():
+    if g.user is not None:
+        delete_account()
+        session.clear()
+    return redirect(url_for('auth.login'))
 
 
 @bp.before_app_request

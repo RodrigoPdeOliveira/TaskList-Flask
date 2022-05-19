@@ -85,7 +85,16 @@ def delete_task(task_id):
 
 
 def delete_account():
-    pass
+    db = get_db()
+    db.execute(
+        f"""DELETE FROM user
+            WHERE id={g.user['id']}"""
+    )
+    db.execute(
+        f"""DELETE FROM tasks
+            WHERE author_id={g.user['id']}"""
+    )
+    db.commit()
 
 
 def delete_all_tasks():
