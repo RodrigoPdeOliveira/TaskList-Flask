@@ -20,6 +20,22 @@ def save_task(form: TaskForm):
     db.commit()
 
 
+def task_edit(form: TaskForm, task_id):
+    db = get_db()
+
+    db.execute(
+        f"""UPDATE tasks
+            SET title=?, about=?, ends_on=?
+            WHERE id={task_id} AND author_id={g.user['id']}""",
+        (
+            form.title.data,
+            form.about.data,
+            form.date.data
+        )
+    )
+    db.commit()
+
+
 def create_user(form: RegisterForm):
     db = get_db()
 
@@ -73,6 +89,16 @@ def get_user_tasks():
     ).fetchall()
 
     return tasks
+
+
+def get_task(task_id):
+    db = get_db()
+    task = db.execute(
+        f"""SELECT title, about, ends_on, author_id, tasks.id
+            FROM tasks WHERE author_id={g.user['id']} AND id={task_id}"""
+    ).fetchone()
+
+    return task
 
 
 def delete_task(task_id):
