@@ -1,6 +1,7 @@
-from .forms import RegisterForm, LoginForm
+from .forms import RegisterForm, LoginForm, NewPassword
 from .functions import (
-    create_user, delete_account, delete_all_tasks, log_in, log_out
+    change_password, create_user, delete_account, delete_all_tasks, log_in,
+    log_out, check_password_hash
     )
 from .db import get_db
 from flask import Blueprint, render_template, redirect, url_for, g, session
@@ -32,7 +33,15 @@ def login():
 @bp.route('/user', methods=('POST', 'GET'))
 def user():
     if g.user is not None:
-        return render_template('auth/user.html')
+        new_pw = NewPassword()
+        if new_pw.validate_on_submit():
+            if check_password_hash(
+                g.user['password'],
+                new_pw.old_password.data
+                    ):
+                change_password(new_pw.new_password.data)
+                return redirect(url_for('auth.user'))
+        return render_template('auth/user.html', password=new_pw)
     else:
         return redirect(url_for('auth.login'))
 

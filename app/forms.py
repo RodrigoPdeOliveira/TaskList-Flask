@@ -27,3 +27,11 @@ class TaskForm(FlaskForm):
             validators=[InputRequired()],
             format='%Y-%m-%dT%H:%M'
         )
+
+
+class NewPassword(FlaskForm):
+    old_password = PasswordField('Old Password: ', [InputRequired()])
+    new_password = PasswordField('New Password: ', [
+        InputRequired(),
+        EqualTo('confirm', message='Passwords must match')])
+    confirm = PasswordField('Confirm New Password: ', [InputRequired()])

@@ -130,3 +130,21 @@ def delete_all_tasks():
             WHERE author_id={g.user['id']}"""
     )
     db.commit()
+
+
+def change_password(new_password):
+    new_password = generate_password_hash(new_password)
+    db = get_db()
+    db.execute(
+        f"""UPDATE user
+            SET password=?
+            WHERE id={g.user['id']}""",
+        (
+            new_password,
+        )
+    )
+    db.commit()
+
+
+def change_username():
+    pass

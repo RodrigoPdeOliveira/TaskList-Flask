@@ -17,7 +17,13 @@
     <div>
         <button data-bs-toggle="collapse" data-bs-target="#changepassword">Change Password</button>
         <div id="changepassword" class="collapse">
-            <h4>Change Password</h4>
+            <form method="POST" action="">
+                {{ password.csrf_token }}
+                {{ password.old_password.label }} {{ password.old_password }}
+                {{ password.new_password.label }} {{ password.new_password }}
+                {{ password.confirm.label }} {{ password.confirm }}
+                <input type="submit" value="Submit">
+            </form>
         </div>
     </div>
     <div>
