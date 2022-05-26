@@ -30,8 +30,13 @@ class TaskForm(FlaskForm):
 
 
 class NewPassword(FlaskForm):
-    old_password = PasswordField('Old Password: ', [InputRequired()])
-    new_password = PasswordField('New Password: ', [
+    old_password = PasswordField('Old password: ', [InputRequired()])
+    new_password = PasswordField('New password: ', [
         InputRequired(),
         EqualTo('confirm', message='Passwords must match')])
-    confirm = PasswordField('Confirm New Password: ', [InputRequired()])
+    confirm = PasswordField('Confirm new password: ', [InputRequired()])
+
+
+class NewUsername(FlaskForm):
+    new_username = StringField('New username: ', [InputRequired()])
+    password = PasswordField('Confirm your password: ', [InputRequired()])

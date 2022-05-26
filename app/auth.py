@@ -1,7 +1,7 @@
-from .forms import RegisterForm, LoginForm, NewPassword
+from .forms import RegisterForm, LoginForm, NewPassword, NewUsername
 from .functions import (
     change_password, create_user, delete_account, delete_all_tasks, log_in,
-    log_out, check_password_hash
+    log_out, check_password_hash, change_username
     )
 from .db import get_db
 from flask import Blueprint, render_template, redirect, url_for, g, session
@@ -41,7 +41,19 @@ def user():
                     ):
                 change_password(new_pw.new_password.data)
                 return redirect(url_for('auth.user'))
-        return render_template('auth/user.html', password=new_pw)
+
+        new_usrnm = NewUsername()
+        if new_usrnm.validate_on_submit():
+            if check_password_hash(
+                g.user['password'],
+                new_usrnm.password.data
+                    ):
+                change_username(new_usrnm.new_username.data)
+                return redirect(url_for('auth.user'))
+
+        return render_template(
+            'auth/user.html', password=new_pw, username=new_usrnm
+            )
     else:
         return redirect(url_for('auth.login'))
 

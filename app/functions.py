@@ -146,5 +146,14 @@ def change_password(new_password):
     db.commit()
 
 
-def change_username():
-    pass
+def change_username(new_username):
+    db = get_db()
+    db.execute(
+        f"""UPDATE user
+            SET username=?
+            WHERE id={g.user['id']}""",
+        (
+            new_username,
+        )
+    )
+    db.commit()

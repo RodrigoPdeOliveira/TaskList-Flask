@@ -11,7 +11,12 @@
     <div>
         <button data-bs-toggle="collapse" data-bs-target="#changeusername">Change Username</button>
         <div id="changeusername" class="collapse">
-            <h4>Change Username</h4>
+            <form method="POST" action="">
+                {{ password.csrf_token }}
+                {{ username.new_username.label }} {{ username.new_username }}
+                {{ username.password.label }}  {{ username.password }}
+                <input type="submit" value="Submit">
+            </form>
         </div>
     </div>
     <div>
